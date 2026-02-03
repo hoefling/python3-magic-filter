@@ -28,17 +28,19 @@ jobs:
             python3-pytest \
             python3-pytest-cov
 
-      - name: Setup non-root user
-        run: |
-          useradd -m builder
-          mkdir -p /home/builder/.cache
-          chown -R builder:builder /home/builder
-        shell: bash
 
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
+
+      - name: Setup non-root user
+        run: |
+          useradd -m builder
+          mkdir -p /home/builder/.cache
+          chown -R builder:builder /home/builder
+          chown -R builder:builder $GITHUB_WORKSPACE/..
+        shell: bash
 
       - name: Show versions (debug)
         run: |

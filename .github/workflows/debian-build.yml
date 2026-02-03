@@ -6,7 +6,7 @@ on:
 
 jobs:
   build-deb:
-    runs-on: ubuntu-24.04-arm64
+    runs-on: ubuntu-24.04-arm
     container:
       image: debian:13.1
     steps:

@@ -28,7 +28,6 @@ jobs:
             python3-pytest \
             python3-pytest-cov
 
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -53,12 +52,17 @@ jobs:
           cd $GITHUB_WORKSPACE
           debuild -us -uc -b
           mkdir $GITHUB_WORKSPACE/artifacts
-          cp ../*.deb ../*.changes ../*.buildinfo $GITHUB_WORKSPACE/artifacts/
+          cp ../*.deb $GITHUB_WORKSPACE/artifacts/
+          cp ../*.changes $GITHUB_WORKSPACE/artifacts/
+          cp ../*.buildinfo $GITHUB_WORKSPACE/artifacts/
+          ls -l $GITHUB_WORKSPACE/artifacts/
           "
 
       - name: Run lintian
         run: |
+          su builder -c "
           lintian $GITHUB_WORKSPACE/artifacts/*.changes || true
+          "
 
       - name: Upload .deb artifacts
         uses: actions/upload-artifact@v4

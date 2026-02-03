@@ -9,6 +9,8 @@ jobs:
     runs-on: ubuntu-24.04-arm
     container:
       image: debian:13.1
+    env:
+      DEBIAN_FRONTEND: 'noninteractive'
     steps:
       - name: Install build dependencies
         run: |
@@ -34,8 +36,8 @@ jobs:
       - name: Show versions (debug)
         run: |
           python3 --version
-          dh --version
           hatchling --version
+          debuild --version
 
       - name: Build package
         run: |

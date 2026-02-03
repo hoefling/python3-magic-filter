@@ -36,7 +36,6 @@ jobs:
       - name: Show versions (debug)
         run: |
           python3 --version
-          hatchling --version
           debuild --version
 
       - name: Build package

@@ -49,23 +49,21 @@ jobs:
       - name: Build package
         run: |
           su builder -c "
-          cd $GITHUB_WORKSPACE
           debuild -us -uc -b
-          mkdir $GITHUB_WORKSPACE/artifacts
-          cp ../*.deb $GITHUB_WORKSPACE/artifacts/
-          cp ../*.changes $GITHUB_WORKSPACE/artifacts/
-          cp ../*.buildinfo $GITHUB_WORKSPACE/artifacts/
-          ls -l $GITHUB_WORKSPACE/artifacts/
+          mkdir artifacts
+          cp ../*.deb artifacts/
+          cp ../*.changes artifacts/
+          cp ../*.buildinfo artifacts/
           "
 
       - name: Run lintian
         run: |
           su builder -c "
-          lintian $GITHUB_WORKSPACE/artifacts/*.changes
+          lintian artifacts/*.changes
           "
 
       - name: Upload .deb artifacts
         uses: actions/upload-artifact@v4
         with:
           name: debian-packages
-          path: $GITHUB_WORKSPACE/artifacts/
+          path: artifacts/**/*

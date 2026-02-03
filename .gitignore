@@ -1,0 +1,68 @@
+# -------------------------------------------------
+# Debian packaging artifacts
+# -------------------------------------------------
+*.deb
+*.ddeb
+*.buildinfo
+*.changes
+*.dsc
+*.tar.*
+*.orig
+*.orig.tar.*
+*.debian.tar.*
+.debhelper/
+debian/*.log
+debian/*.substvars
+debian/files
+debian/.debhelper/
+debian/python3-magic-filter/
+debian/tmp/
+debian/*stamp*
+debian/*debhelper*
+
+# quilt / dpkg-source
+.pc/
+*.patch
+
+# -------------------------------------------------
+# pybuild / Python build artifacts
+# -------------------------------------------------
+.pybuild/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# -------------------------------------------------
+# Hatch / PEP 517
+# -------------------------------------------------
+.magic-filter-versioned
+.hatch/
+.hatch_version
+
+# -------------------------------------------------
+# Virtualenvs
+# -------------------------------------------------
+.venv/
+venv/
+ENV/
+env/
+
+# -------------------------------------------------
+# IDE / editor junk
+# -------------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# -------------------------------------------------
+# Logs
+# -------------------------------------------------
+*.log

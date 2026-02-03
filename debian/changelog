@@ -1,0 +1,5 @@
+python3-magic-filter (1.0.12-1) unstable; urgency=medium
+
+  * First Debian package release.
+
+ -- Oleg Höfling <oleg.hoefling@gmail.com>  Tue, 03 Feb 2026 13:16:21 +0000

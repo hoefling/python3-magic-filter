@@ -1,0 +1,26 @@
+Source: python3-magic-filter
+Section: python
+Priority: optional
+Maintainer: Oleg Höfling <oleg.hoefling@gmail.com>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ dh-python,
+ python3-all,
+ python3-build,
+ python3-hatchling,
+ pybuild-plugin-pyproject,
+ python3-pytest,
+ python3-pytest-cov
+Standards-Version: 4.7.2
+Homepage: https://github.com/aiogram/magic-filter
+#Vcs-Browser: https://salsa.debian.org/debian/python3-magic-filter
+#Vcs-Git: https://salsa.debian.org/debian/python3-magic-filter.git
+
+Package: python3-magic-filter
+Architecture: any
+Depends:
+ ${python3:Depends},
+ ${misc:Depends},
+Description: Magic filter library used by aiogram
+ Lightweight DSL for building message filters, used by aiogram.

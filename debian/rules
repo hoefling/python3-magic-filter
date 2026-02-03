@@ -1,0 +1,16 @@
+#!/usr/bin/make -f
+
+export PYBUILD_NAME=magic-filter
+export PYBUILD_DIR=magic-filter
+export PYBUILD_SYSTEM=pyproject
+
+# Extract upstream version from Debian changelog
+UPSTREAM_VERSION=$(shell dpkg-parsechangelog --show-field Version | cut -d- -f1)
+
+%:
+	# Update __version__ dynamically like upstream CI
+	cd $(PYBUILD_DIR); pwd; \
+	if [ "$$(hatchling version)" != "$(UPSTREAM_VERSION)" ]; then \
+		hatchling version $(UPSTREAM_VERSION); \
+	fi
+	dh $@ --buildsystem=pybuild --with python3

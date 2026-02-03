@@ -2,7 +2,8 @@ name: Build Debian package
 
 on:
   push:
-  pull_request:
+    tags:
+      - 'v*'
 
 jobs:
   build-deb:
@@ -66,4 +67,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: debian-packages
-          path: artifacts/**/*
+          path: artifacts/*
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: artifacts/*

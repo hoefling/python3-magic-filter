@@ -28,6 +28,13 @@ jobs:
             python3-pytest \
             python3-pytest-cov
 
+      - name: Setup non-root user
+        run: |
+          useradd -m builder
+          mkdir -p /home/builder/.cache
+          chown -R builder:builder /home/builder
+        shell: bash
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
@@ -40,17 +47,22 @@ jobs:
 
       - name: Build package
         run: |
+          su builder -c "
+          cd $GITHUB_WORKSPACE
           debuild -us -uc -b
+          mkdir $GITHUB_WORKSPACE/artifacts
+          cp ../*.deb ../*.changes ../*.buildinfo $GITHUB_WORKSPACE/artifacts/
+          "
 
       - name: Run lintian
         run: |
-          lintian *.changes || true
+          lintian $GITHUB_WORKSPACE/artifacts/*.changes || true
 
       - name: Upload .deb artifacts
         uses: actions/upload-artifact@v4
         with:
           name: debian-packages
           path: |
-            *.deb
-            *.changes
-            *.buildinfo
+            $GITHUB_WORKSPACE/artifacts/*.deb
+            $GITHUB_WORKSPACE/artifacts/*.changes
+            $GITHUB_WORKSPACE/artifacts/*.buildinfo

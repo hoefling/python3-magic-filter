@@ -61,14 +61,11 @@ jobs:
       - name: Run lintian
         run: |
           su builder -c "
-          lintian $GITHUB_WORKSPACE/artifacts/*.changes || true
+          lintian $GITHUB_WORKSPACE/artifacts/*.changes
           "
 
       - name: Upload .deb artifacts
         uses: actions/upload-artifact@v4
         with:
           name: debian-packages
-          path: |
-            $GITHUB_WORKSPACE/artifacts/*.deb
-            $GITHUB_WORKSPACE/artifacts/*.changes
-            $GITHUB_WORKSPACE/artifacts/*.buildinfo
+          path: $GITHUB_WORKSPACE/artifacts/

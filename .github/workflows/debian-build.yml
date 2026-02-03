@@ -1,0 +1,55 @@
+name: Build Debian package
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-deb:
+    runs-on: ubuntu-24.04-arm64
+    container:
+      image: debian:13.1
+    steps:
+      - name: Install build dependencies
+        run: |
+          apt update
+          apt install -y \
+            build-essential \
+            debhelper \
+            devscripts \
+            dh-python \
+            git \
+            python3-all \
+            python3-build \
+            python3-hatchling \
+            pybuild-plugin-pyproject \
+            python3-pytest \
+            python3-pytest-cov
+
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Show versions (debug)
+        run: |
+          python3 --version
+          dh --version
+          hatchling --version
+
+      - name: Build package
+        run: |
+          debuild -us -uc -b
+
+      - name: Run lintian
+        run: |
+          lintian *.changes || true
+
+      - name: Upload .deb artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: debian-packages
+          path: |
+            *.deb
+            *.changes
+            *.buildinfo
